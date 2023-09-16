@@ -1,8 +1,8 @@
-import 'dart:async';
 
+import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -276,7 +276,7 @@ class _ServerGMapWidgetState extends State<ServerGMapWidget> {
                         // markers: Marker(markerId: MarkerId()),
                       );
 
-                return const Text('has Data');
+          
               } else {
                 return const Text('Empty data');
               }

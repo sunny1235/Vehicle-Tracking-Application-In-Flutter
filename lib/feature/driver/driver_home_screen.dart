@@ -1,6 +1,7 @@
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:background_locator_2/background_locator.dart';
+import 'package:background_locator_2/location_dto.dart';
 import 'package:background_locator_2/settings/android_settings.dart';
 import 'package:background_locator_2/settings/ios_settings.dart';
 import 'package:background_locator_2/settings/locator_settings.dart';
@@ -8,8 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import '../../location_callback_handler.dart';
-import '../../location_service_repo.dart';
+import '../../utils/location_service_repo.dart';
 import '../../widgets/custom_button.dart';
 import 'package:location/location.dart' as loc;
 
@@ -264,13 +264,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     await _checkLocationPermission();
     if (hasLocationPermission) {
       await startLocationService(_locationData);
-      final _isRunning = await BackgroundLocator.isServiceRunning();
+      final isServiceRunning = await BackgroundLocator.isServiceRunning();
       if (kDebugMode) {
-        print('on start is running :: $_isRunning');
+        print('on start is running :: $isServiceRunning');
       }
       if (mounted) {
         setState(() {
-          isRunning = _isRunning;
+          isRunning = isServiceRunning;
           if (box != null) {
             box!.put(isRunningKey, isRunning);
           }
@@ -279,15 +279,41 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     } else {
       // show error
     }
-
   }
 
   Future<void> deleteAll() async {
     print('Delete all Data');
-    await FirebaseFirestore.instance.collection('location').get().then((snapshot) {
+    await FirebaseFirestore.instance
+        .collection('location')
+        .get()
+        .then((snapshot) {
       for (DocumentSnapshot doc in snapshot.docs) {
         doc.reference.delete();
       }
     });
+  }
+}
+
+class LocationCallbackHandler {
+  static Future<void> initCallback(Map<dynamic, dynamic> params) async {
+    LocationServiceRepository myLocationCallbackRepository =
+        LocationServiceRepository();
+    await myLocationCallbackRepository.init(params);
+  }
+
+  static Future<void> disposeCallback() async {
+    LocationServiceRepository myLocationCallbackRepository =
+        LocationServiceRepository();
+    await myLocationCallbackRepository.dispose();
+  }
+
+  static Future<void> callback(LocationDto locationDto) async {
+    LocationServiceRepository myLocationCallbackRepository =
+        LocationServiceRepository();
+    await myLocationCallbackRepository.callback(locationDto);
+  }
+
+  static Future<void> notificationCallback() async {
+    print('***notificationCallback');
   }
 }

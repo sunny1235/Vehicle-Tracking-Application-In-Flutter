@@ -1,5 +1,5 @@
 
-import 'package:background_service_exmp/firebase_options.dart';
+import 'package:background_service_exmp/utils/firebase_options.dart';
 import 'package:background_service_exmp/widgets/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

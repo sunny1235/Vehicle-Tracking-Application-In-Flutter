@@ -84,7 +84,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   }
 
   void fetchInitialLocationFromDB() async {
-    var a = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('location')
         .get()
         .asStream()

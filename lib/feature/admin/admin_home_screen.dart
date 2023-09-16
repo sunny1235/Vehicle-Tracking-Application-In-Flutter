@@ -1,4 +1,5 @@
-import 'package:background_service_exmp/feature/googleMap/server_GMap_widget.dart';
+
+import 'package:background_service_exmp/feature/google-map/server_gmap_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';

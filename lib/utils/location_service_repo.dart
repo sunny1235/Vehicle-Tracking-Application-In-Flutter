@@ -4,7 +4,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:background_locator_2/location_dto.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'file_manager.dart';
@@ -14,7 +13,7 @@ import 'firebase_services.dart';
 // import 'p
 
 class LocationServiceRepository {
-  static LocationServiceRepository _instance = LocationServiceRepository._();
+  static final LocationServiceRepository _instance = LocationServiceRepository._();
 
   LocationServiceRepository._();
 
@@ -27,7 +26,6 @@ class LocationServiceRepository {
   int _count = -1;
 
   Future<void> init(Map<dynamic, dynamic> params) async {
-    //TODO change logs
     print("***********Init callback handler");
     if (params.containsKey('countInit')) {
       dynamic tmpCount = params['countInit'];
@@ -87,16 +85,10 @@ class LocationServiceRepository {
   }
 
   static String formatDateLog(DateTime date) {
-    return date.hour.toString() +
-        ":" +
-        date.minute.toString() +
-        ":" +
-        date.second.toString();
+    return "${date.hour.toString()}:${date.minute.toString()}:${date.second.toString()}";
   }
 
   static String formatLog(LocationDto locationDto) {
-    return dp(locationDto.latitude, 4).toString() +
-        " " +
-        dp(locationDto.longitude, 4).toString();
+    return "${dp(locationDto.latitude, 4).toString()}  ${dp(locationDto.longitude, 4).toString()}";
   }
 }
